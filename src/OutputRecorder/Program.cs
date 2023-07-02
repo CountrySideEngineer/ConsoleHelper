@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using OutputRecorder;
 
-namespace OutputRecorderSample
+namespace OutputRecorder
 {
 	internal class Program
 	{

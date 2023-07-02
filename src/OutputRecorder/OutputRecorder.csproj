@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OutputRecorderDll\OutputRecorderDll.csproj">
+      <Project>{e814497e-479e-4379-90c1-6c2441eb0d73}</Project>
+      <Name>OutputRecorderDll</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
