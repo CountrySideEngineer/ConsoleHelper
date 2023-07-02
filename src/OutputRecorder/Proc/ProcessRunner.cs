@@ -42,14 +42,12 @@ namespace OutputRecorder.Proc
 				proc.StartInfo = _procStartInfo;
 				proc.OutputDataReceived += new DataReceivedEventHandler(StandardDataReceived);
 				proc.ErrorDataReceived += new DataReceivedEventHandler(ErrorDataReceived);
-				proc.Exited += new EventHandler(DataReceiveFinished);
 				proc.EnableRaisingEvents = true;
+				proc.Exited += new EventHandler(DataReceiveFinished);
 				proc.Start();
 				proc.BeginOutputReadLine();
 				proc.BeginErrorReadLine();
 				proc.WaitForExit();
-
-				Console.WriteLine("Exited");
 			}
 		}
 	}
