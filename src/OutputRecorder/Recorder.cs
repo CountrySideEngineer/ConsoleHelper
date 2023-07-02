@@ -27,6 +27,8 @@ namespace OutputRecorder
 
 		public override void Record(string appPath, string args = "")
 		{
+			_recorder.OutputFilePath = OutputFilePath;
+
 			_procRunner.ReceiveStandardData += _recorder.DataReceivedEventHandler;
 			_procRunner.ReceiveErrorData += _recorder.DataReceivedEventHandler;
 			_procRunner.ReceiveFinished += _recorder.DataReceiveFinishedEventHandler;
