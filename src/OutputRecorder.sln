@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutputRecorder", "OutputRecorder\OutputRecorder.csproj", "{E814497E-479E-4379-90C1-6C2441EB0D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutputRecorderSample", "OutputRecorderSample\OutputRecorderSample.csproj", "{BADE7A16-42E2-4F12-85C7-28EE6DC0754D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E814497E-479E-4379-90C1-6C2441EB0D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E814497E-479E-4379-90C1-6C2441EB0D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E814497E-479E-4379-90C1-6C2441EB0D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E814497E-479E-4379-90C1-6C2441EB0D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BADE7A16-42E2-4F12-85C7-28EE6DC0754D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BADE7A16-42E2-4F12-85C7-28EE6DC0754D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BADE7A16-42E2-4F12-85C7-28EE6DC0754D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BADE7A16-42E2-4F12-85C7-28EE6DC0754D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED032EE4-586A-4D30-B167-530D75F155BF}
+	EndGlobalSection
+EndGlobal
