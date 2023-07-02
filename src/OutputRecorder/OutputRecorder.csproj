@@ -49,6 +49,7 @@
     <Compile Include="ARecorder.cs" />
     <Compile Include="IProcessRecorder.cs" />
     <Compile Include="Output\OutputDataRecorder.cs" />
+    <Compile Include="Output\StandardOutputData.cs" />
     <Compile Include="Proc\AOutputProcRunner.cs" />
     <Compile Include="Proc\IProcRunner.cs" />
     <Compile Include="Proc\ProcessRunner.cs" />
