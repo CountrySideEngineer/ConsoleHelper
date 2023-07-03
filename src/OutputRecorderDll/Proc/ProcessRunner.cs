@@ -30,6 +30,7 @@ namespace OutputRecorder.Proc
 				FileName = procName,
 				CreateNoWindow = true,
 				UseShellExecute = false,
+				RedirectStandardInput = true,
 				RedirectStandardOutput = true,
 				RedirectStandardError = true,
 			};
