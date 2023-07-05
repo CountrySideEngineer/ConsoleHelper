@@ -12,10 +12,15 @@ namespace OutputRecorder.Proc
 	{
 		protected ProcessStartInfo _procStartInfo = null;
 
+		protected bool _isContinue = true;
+
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public ProcessRunner() : base() { }
+		public ProcessRunner() : base()
+		{
+			_isContinue = false;
+		}
 
 		public override void Run(string procName, string procArgs)
 		{
@@ -38,6 +43,8 @@ namespace OutputRecorder.Proc
 
 		protected virtual void Run()
 		{
+			_isContinue = true;
+
 			using (var proc = new Process())
 			{
 				proc.StartInfo = _procStartInfo;
@@ -47,9 +54,27 @@ namespace OutputRecorder.Proc
 				proc.Exited += new EventHandler(DataReceiveFinished);
 				proc.Start();
 				proc.BeginOutputReadLine();
-				proc.BeginErrorReadLine();
+				proc.BeginErrorReadLine();				
+				using (var stdin = proc.StandardInput)
+				{
+					string inputText = string.Empty;
+					do
+					{
+						ConsoleKeyInfo keyInfo = Console.ReadKey();
+						stdin.WriteLine(keyInfo.KeyChar);
+					} while ((inputText != null) && (true == _isContinue));
+				}
 				proc.WaitForExit();
 			}
+		}
+
+		protected override void DataReceiveFinished(object sender, EventArgs e)
+		{
+			base.DataReceiveFinished(sender, e);
+
+			_isContinue = false;
+
+			Console.WriteLine("Push enter key to end program.");
 		}
 	}
 }
