@@ -40,6 +40,15 @@ namespace OutputRecorder
 			_procRunner.ReceiveFinished += _stdOutput.DataReceivedFinishedEventHandler;
 
 			_procRunner.Run(appPath, args);
+
+			_procRunner.ReceiveStandardData -= _recorder.DataReceivedEventHandler;
+			_procRunner.ReceiveErrorData -= _recorder.DataReceivedEventHandler;
+			_procRunner.ReceiveFinished -= _recorder.DataReceiveFinishedEventHandler;
+
+			_procRunner.ReceiveStandardData -= _stdOutput.DataReceivedEventHandler;
+			_procRunner.ReceiveErrorData -= _stdOutput.ErrorReceivedEventHandler;
+			_procRunner.ReceiveFinished -= _stdOutput.DataReceivedFinishedEventHandler;
+
 		}
 	}
 }
