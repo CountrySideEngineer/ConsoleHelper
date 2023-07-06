@@ -27,28 +27,50 @@ namespace OutputRecorder
 			_stdOutput = new StandardOutputData();
 		}
 
+		/// <summary>
+		/// Record the application standard output content into log output file.
+		/// </summary>
+		/// <param name="appPath">Path to file to execute as process.</param>
+		/// <param name="args">Argument of the application.</param>
 		public override void Record(string appPath, string args = "")
 		{
 			_recorder.OutputFilePath = OutputFilePath;
 
-			_procRunner.ReceiveStandardData += _recorder.DataReceivedEventHandler;
-			_procRunner.ReceiveErrorData += _recorder.DataReceivedEventHandler;
-			_procRunner.ReceiveFinished += _recorder.DataReceiveFinishedEventHandler;
-
-			_procRunner.ReceiveStandardData += _stdOutput.DataReceivedEventHandler;
-			_procRunner.ReceiveErrorData += _stdOutput.ErrorReceivedEventHandler;
-			_procRunner.ReceiveFinished += _stdOutput.DataReceivedFinishedEventHandler;
+			SetUpOutputReceiver(ref _recorder);
+			SetUpStdOutputRecorder(ref _stdOutput);
 
 			_procRunner.Run(appPath, args);
 
-			_procRunner.ReceiveStandardData -= _recorder.DataReceivedEventHandler;
-			_procRunner.ReceiveErrorData -= _recorder.DataReceivedEventHandler;
-			_procRunner.ReceiveFinished -= _recorder.DataReceiveFinishedEventHandler;
+			ReleaseOutputReceiver(ref _recorder);
+			ReleaseStdOutputRecorder(ref _stdOutput);
+		}
 
-			_procRunner.ReceiveStandardData -= _stdOutput.DataReceivedEventHandler;
-			_procRunner.ReceiveErrorData -= _stdOutput.ErrorReceivedEventHandler;
-			_procRunner.ReceiveFinished -= _stdOutput.DataReceivedFinishedEventHandler;
+		internal virtual void SetUpOutputReceiver(ref OutputDataRecorder recorder)
+		{
+			_procRunner.ReceiveStandardData += recorder.DataReceivedEventHandler;
+			_procRunner.ReceiveErrorData += recorder.DataReceivedEventHandler;
+			_procRunner.ReceiveFinished += recorder.DataReceiveFinishedEventHandler;
+		}
 
+		internal virtual void SetUpStdOutputRecorder(ref StandardOutputData stdOutput)
+		{
+			_procRunner.ReceiveStandardData += stdOutput.DataReceivedEventHandler;
+			_procRunner.ReceiveErrorData += stdOutput.ErrorReceivedEventHandler;
+			_procRunner.ReceiveFinished += stdOutput.DataReceivedFinishedEventHandler;
+		}
+
+		internal virtual void ReleaseOutputReceiver(ref OutputDataRecorder recorder)
+		{
+			_procRunner.ReceiveStandardData -= recorder.DataReceivedEventHandler;
+			_procRunner.ReceiveErrorData -= recorder.DataReceivedEventHandler;
+			_procRunner.ReceiveFinished -= recorder.DataReceiveFinishedEventHandler;
+		}
+
+		internal virtual void ReleaseStdOutputRecorder(ref StandardOutputData stdOutput)
+		{
+			_procRunner.ReceiveStandardData -= stdOutput.DataReceivedEventHandler;
+			_procRunner.ReceiveErrorData -= stdOutput.ErrorReceivedEventHandler;
+			_procRunner.ReceiveFinished -= stdOutput.DataReceivedFinishedEventHandler;
 		}
 	}
 }
