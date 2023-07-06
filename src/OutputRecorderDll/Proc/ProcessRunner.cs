@@ -13,6 +13,9 @@ namespace OutputRecorder.Proc
 		protected ProcessStartInfo _procStartInfo = null;
 
 		protected bool _isContinue = true;
+		protected DataReceivedEventHandler _outputDataReceiveEventHandler;
+		protected DataReceivedEventHandler _errorDataReceivedEventHandler;
+		protected EventHandler _exitEventHandler;
 
 		/// <summary>
 		/// Default constructor.
@@ -47,11 +50,8 @@ namespace OutputRecorder.Proc
 
 			using (var proc = new Process())
 			{
-				proc.StartInfo = _procStartInfo;
-				proc.OutputDataReceived += new DataReceivedEventHandler(StandardDataReceived);
-				proc.ErrorDataReceived += new DataReceivedEventHandler(ErrorDataReceived);
-				proc.EnableRaisingEvents = true;
-				proc.Exited += new EventHandler(DataReceiveFinished);
+				SetupProcess(proc);
+
 				proc.Start();
 				proc.BeginOutputReadLine();
 				proc.BeginErrorReadLine();				
@@ -65,7 +65,30 @@ namespace OutputRecorder.Proc
 					} while ((inputText != null) && (true == _isContinue));
 				}
 				proc.WaitForExit();
+
+				ReleaseProcess(proc);
 			}
+		}
+
+		protected void SetupProcess(Process proc)
+		{
+			_outputDataReceiveEventHandler = new DataReceivedEventHandler(StandardDataReceived);
+			_errorDataReceivedEventHandler = new DataReceivedEventHandler(ErrorDataReceived);
+			_exitEventHandler = new EventHandler(DataReceiveFinished);
+
+			proc.OutputDataReceived += _outputDataReceiveEventHandler;
+			proc.ErrorDataReceived += _errorDataReceivedEventHandler;
+			proc.EnableRaisingEvents = true;
+			proc.Exited += _exitEventHandler;
+
+			proc.StartInfo = _procStartInfo;
+		}
+
+		protected void ReleaseProcess(Process proc)
+		{
+			proc.OutputDataReceived -= _outputDataReceiveEventHandler;
+			proc.ErrorDataReceived -= _errorDataReceivedEventHandler;
+			proc.Exited -= _exitEventHandler;
 		}
 
 		protected override void DataReceiveFinished(object sender, EventArgs e)
