@@ -45,6 +45,10 @@ namespace OutputRecorder
 			ReleaseStdOutputRecorder(ref _stdOutput);
 		}
 
+		/// <summary>
+		/// Setup output event handler to receive output data.
+		/// </summary>
+		/// <param name="recorder">OutputDataRecorder object.</param>
 		internal virtual void SetUpOutputReceiver(ref OutputDataRecorder recorder)
 		{
 			_procRunner.ReceiveStandardData += recorder.DataReceivedEventHandler;
@@ -52,6 +56,10 @@ namespace OutputRecorder
 			_procRunner.ReceiveFinished += recorder.DataReceiveFinishedEventHandler;
 		}
 
+		/// <summary>
+		/// Setup standard output data recorder.
+		/// </summary>
+		/// <param name="stdOutput">Reference to StandardOutputData object.</param>
 		internal virtual void SetUpStdOutputRecorder(ref StandardOutputData stdOutput)
 		{
 			_procRunner.ReceiveStandardData += stdOutput.DataReceivedEventHandler;
@@ -59,6 +67,10 @@ namespace OutputRecorder
 			_procRunner.ReceiveFinished += stdOutput.DataReceivedFinishedEventHandler;
 		}
 
+		/// <summary>
+		/// Release output data receiver.
+		/// </summary>
+		/// <param name="recorder">OutputDataRecorder object.</param>
 		internal virtual void ReleaseOutputReceiver(ref OutputDataRecorder recorder)
 		{
 			_procRunner.ReceiveStandardData -= recorder.DataReceivedEventHandler;
@@ -66,6 +78,10 @@ namespace OutputRecorder
 			_procRunner.ReceiveFinished -= recorder.DataReceiveFinishedEventHandler;
 		}
 
+		/// <summary>
+		/// Release standard output data recorder.
+		/// </summary>
+		/// <param name="stdOutput">Reference to StandardOutputData object.</param>
 		internal virtual void ReleaseStdOutputRecorder(ref StandardOutputData stdOutput)
 		{
 			_procRunner.ReceiveStandardData -= stdOutput.DataReceivedEventHandler;
