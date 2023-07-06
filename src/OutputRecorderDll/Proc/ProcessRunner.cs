@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -25,12 +26,22 @@ namespace OutputRecorder.Proc
 			_isContinue = false;
 		}
 
+		/// <summary>
+		/// Run process.
+		/// </summary>
+		/// <param name="procName">Path to file to execute in process.</param>
+		/// <param name="procArgs">Argument to pass to the application.</param>
 		public override void Run(string procName, string procArgs)
 		{
 			SetupStartInfo(procName, procArgs);
 			Run();
 		}
 
+		/// <summary>
+		/// Setup ProcessStartInfo object to be set to the process.
+		/// </summary>
+		/// <param name="procName">Path to file to execute in process.</param>
+		/// <param name="procArgs">Argument to pass to the application.</param>
 		protected virtual void SetupStartInfo(string procName, string procArgs)
 		{
 			_procStartInfo = new ProcessStartInfo()
@@ -44,32 +55,25 @@ namespace OutputRecorder.Proc
 			};
 		}
 
+		/// <summary>
+		/// Run the process.
+		/// </summary>
 		protected virtual void Run()
 		{
-			_isContinue = true;
-
 			using (var proc = new Process())
 			{
 				SetupProcess(proc);
 
-				proc.Start();
-				proc.BeginOutputReadLine();
-				proc.BeginErrorReadLine();				
-				using (var stdin = proc.StandardInput)
-				{
-					string inputText = string.Empty;
-					do
-					{
-						ConsoleKeyInfo keyInfo = Console.ReadKey();
-						stdin.WriteLine(keyInfo.KeyChar);
-					} while ((inputText != null) && (true == _isContinue));
-				}
-				proc.WaitForExit();
+				RunProcess(proc);
 
 				ReleaseProcess(proc);
 			}
 		}
 
+		/// <summary>
+		/// Setup process data.
+		/// </summary>
+		/// <param name="proc">Process obejct to be setup.</param>
 		protected void SetupProcess(Process proc)
 		{
 			_outputDataReceiveEventHandler = new DataReceivedEventHandler(StandardDataReceived);
@@ -84,6 +88,33 @@ namespace OutputRecorder.Proc
 			proc.StartInfo = _procStartInfo;
 		}
 
+		/// <summary>
+		/// Run process.
+		/// </summary>
+		/// <param name="proc">Process data to run.</param>
+		protected virtual void RunProcess(Process proc)
+		{
+			_isContinue = true;
+
+			proc.Start();
+			proc.BeginOutputReadLine();
+			proc.BeginErrorReadLine();
+			using (var stdin = proc.StandardInput)
+			{
+				string inputText = string.Empty;
+				do
+				{
+					ConsoleKeyInfo keyInfo = Console.ReadKey();
+					stdin.WriteLine(keyInfo.KeyChar);
+				} while ((inputText != null) && (true == _isContinue));
+			}
+			proc.WaitForExit();
+		}
+
+		/// <summary>
+		/// Release process event handler.
+		/// </summary>
+		/// <param name="proc">Process object to release.</param>
 		protected void ReleaseProcess(Process proc)
 		{
 			proc.OutputDataReceived -= _outputDataReceiveEventHandler;
@@ -91,6 +122,11 @@ namespace OutputRecorder.Proc
 			proc.Exited -= _exitEventHandler;
 		}
 
+		/// <summary>
+		/// Event handler to receive and handle exit event the process raised.
+		/// </summary>
+		/// <param name="sender">Event sender.</param>
+		/// <param name="e">Event argument.</param>
 		protected override void DataReceiveFinished(object sender, EventArgs e)
 		{
 			base.DataReceiveFinished(sender, e);
