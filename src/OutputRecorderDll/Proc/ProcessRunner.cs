@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OutputRecorder.Proc
@@ -55,6 +56,11 @@ namespace OutputRecorder.Proc
 			};
 		}
 
+		protected virtual void SetStartInfo(Process proc)
+		{
+			proc.StartInfo = _procStartInfo;
+		}
+
 		/// <summary>
 		/// Run the process.
 		/// </summary>
@@ -62,11 +68,13 @@ namespace OutputRecorder.Proc
 		{
 			using (var proc = new Process())
 			{
-				SetupProcess(proc);
+				SetStartInfo(proc);
+
+				SetupEventHandler(proc);
 
 				RunProcess(proc);
 
-				ReleaseProcess(proc);
+				ReleaseEventHandler(proc);
 			}
 		}
 
@@ -74,7 +82,7 @@ namespace OutputRecorder.Proc
 		/// Setup process data.
 		/// </summary>
 		/// <param name="proc">Process obejct to be setup.</param>
-		protected void SetupProcess(Process proc)
+		protected void SetupEventHandler(Process proc)
 		{
 			_outputDataReceiveEventHandler = new DataReceivedEventHandler(StandardDataReceived);
 			_errorDataReceivedEventHandler = new DataReceivedEventHandler(ErrorDataReceived);
@@ -84,8 +92,6 @@ namespace OutputRecorder.Proc
 			proc.ErrorDataReceived += _errorDataReceivedEventHandler;
 			proc.EnableRaisingEvents = true;
 			proc.Exited += _exitEventHandler;
-
-			proc.StartInfo = _procStartInfo;
 		}
 
 		/// <summary>
@@ -94,19 +100,28 @@ namespace OutputRecorder.Proc
 		/// <param name="proc">Process data to run.</param>
 		protected virtual void RunProcess(Process proc)
 		{
-			_isContinue = true;
-
-			proc.Start();
-			proc.BeginOutputReadLine();
-			proc.BeginErrorReadLine();
-			using (var stdin = proc.StandardInput)
+			try
 			{
-				string inputText = string.Empty;
-				do
+				_isContinue = true;
+
+
+				proc.Start();
+				proc.BeginOutputReadLine();
+				proc.BeginErrorReadLine();
+				using (var stdin = proc.StandardInput)
 				{
-					ConsoleKeyInfo keyInfo = Console.ReadKey();
-					stdin.WriteLine(keyInfo.KeyChar);
-				} while ((inputText != null) && (true == _isContinue));
+					string inputText = string.Empty;
+					do
+					{
+						ConsoleKeyInfo keyInfo = Console.ReadKey();
+						stdin.Write(keyInfo.KeyChar);
+					} while ((inputText != null) && (true == _isContinue));
+				}
+			}
+			catch (InvalidOperationException)
+			{
+				Console.WriteLine("Sub process request invalid operation");
+
 			}
 			proc.WaitForExit();
 		}
@@ -115,7 +130,7 @@ namespace OutputRecorder.Proc
 		/// Release process event handler.
 		/// </summary>
 		/// <param name="proc">Process object to release.</param>
-		protected void ReleaseProcess(Process proc)
+		protected void ReleaseEventHandler(Process proc)
 		{
 			proc.OutputDataReceived -= _outputDataReceiveEventHandler;
 			proc.ErrorDataReceived -= _errorDataReceivedEventHandler;
