@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OutputRecorder.Proc
+namespace ConsoleHelperLib.Proc
 {
 	internal class ProcessRunner : AOutputProcRunner
 	{
@@ -113,15 +113,18 @@ namespace OutputRecorder.Proc
 					string inputText = string.Empty;
 					do
 					{
-						ConsoleKeyInfo keyInfo = Console.ReadKey();
-						stdin.Write(keyInfo.KeyChar);
+						var inputData = Console.ReadKey();
+						stdin.Write(inputData.KeyChar);
+						if (inputData.KeyChar.Equals('\r'))
+						{
+							stdin.Write('\n');
+						}
 					} while ((inputText != null) && (true == _isContinue));
 				}
 			}
 			catch (InvalidOperationException)
 			{
 				Console.WriteLine("Sub process request invalid operation");
-
 			}
 			proc.WaitForExit();
 		}
