@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHelperDll
+namespace ConsoleHelperLib.Proc
 {
-	internal interface IProcessRecorder
+	internal interface IProcRunner
 	{
-		void Record(string path, string args);
+		void Run(string procName, string procArgs = "");
 	}
 }

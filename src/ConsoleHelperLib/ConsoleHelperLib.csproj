@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E814497E-479E-4379-90C1-6C2441EB0D73}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ConsoleHelperDll</RootNamespace>
-    <AssemblyName>ConsoleHelper.dll</AssemblyName>
+    <RootNamespace>ConsoleHelperLib</RootNamespace>
+    <AssemblyName>ConsoleHelperLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

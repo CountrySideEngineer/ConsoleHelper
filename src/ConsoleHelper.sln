@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHelper", "ConsoleHel
 		{E814497E-479E-4379-90C1-6C2441EB0D73} = {E814497E-479E-4379-90C1-6C2441EB0D73}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHelperDll", "ConsoleHelperDll\ConsoleHelperDll.csproj", "{E814497E-479E-4379-90C1-6C2441EB0D73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHelperLib", "ConsoleHelperLib\ConsoleHelperLib.csproj", "{E814497E-479E-4379-90C1-6C2441EB0D73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

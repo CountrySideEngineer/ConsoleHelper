@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHelperDll.Proc
+namespace ConsoleHelperLib.Proc
 {
 	public abstract class AOutputProcRunner : IProcRunner
 	{

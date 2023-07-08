@@ -9,7 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHelperDll.Output
+namespace ConsoleHelperLib.Output
 {
 	internal class OutputDataRecorder
 	{

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleHelperDll.Output
+namespace ConsoleHelperLib.Output
 {
 	internal class StandardOutputData
 	{

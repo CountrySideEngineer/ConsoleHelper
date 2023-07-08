@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ConsoleHelperDll.Proc
+namespace ConsoleHelperLib.Proc
 {
 	internal class ProcessRunner : AOutputProcRunner
 	{
