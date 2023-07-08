@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using OutputRecorder;
+using ConsoleHelperDll;
 
-namespace OutputRecorder
+namespace ConsoleHelper
 {
 	internal class Program
 	{

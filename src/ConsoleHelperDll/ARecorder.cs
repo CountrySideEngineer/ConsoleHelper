@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OutputRecorder
+namespace ConsoleHelperDll
 {
 	public abstract class ARecorder
 	{

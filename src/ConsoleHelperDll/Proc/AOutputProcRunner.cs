@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OutputRecorder.Proc
+namespace ConsoleHelperDll.Proc
 {
 	public abstract class AOutputProcRunner : IProcRunner
 	{
