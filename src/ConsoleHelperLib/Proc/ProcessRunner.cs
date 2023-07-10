@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -32,10 +33,28 @@ namespace ConsoleHelperLib.Proc
 		/// </summary>
 		/// <param name="procName">Path to file to execute in process.</param>
 		/// <param name="procArgs">Argument to pass to the application.</param>
+		/// <exception cref="ArgumentException"></exception>
 		public override void Run(string procName, string procArgs)
 		{
-			SetupStartInfo(procName, procArgs);
-			Run();
+			if ((string.IsNullOrEmpty(procName)) || (string.IsNullOrWhiteSpace(procName)))
+			{
+				throw new ArgumentException();
+			}
+
+			try
+			{
+				SetupStartInfo(procName, procArgs);
+				Run();
+			}
+			catch (InvalidOperationException)
+			{
+				throw new ArgumentException("Requested operation has been invalid.");
+			}
+			catch (Win32Exception)
+			{
+				string fileName = System.IO.Path.GetFileName(procName);
+				throw new ArgumentException($"{fileName} is not executable.");
+			}
 		}
 
 		/// <summary>
@@ -64,17 +83,27 @@ namespace ConsoleHelperLib.Proc
 		/// <summary>
 		/// Run the process.
 		/// </summary>
+		/// <exception cref="InvalidOperationException"></exception>
+		/// <exception cref="Win32Exception"></exception>
 		protected virtual void Run()
 		{
-			using (var proc = new Process())
+			try
 			{
-				SetStartInfo(proc);
+				using (var proc = new Process())
+				{
+					SetStartInfo(proc);
 
-				SetupEventHandler(proc);
+					SetupEventHandler(proc);
 
-				RunProcess(proc);
+					RunProcess(proc);
 
-				ReleaseEventHandler(proc);
+					ReleaseEventHandler(proc);
+				}
+			}
+			catch (Exception ex)
+			when ((ex is InvalidOperationException) || (ex is Win32Exception))
+			{
+				throw ex;
 			}
 		}
 
@@ -98,6 +127,8 @@ namespace ConsoleHelperLib.Proc
 		/// Run process.
 		/// </summary>
 		/// <param name="proc">Process data to run.</param>
+		/// <exception cref="InvalidOperationException"></exception>
+		/// <exception cref="Win32Exception"></exception>
 		protected virtual void RunProcess(Process proc)
 		{
 			try
@@ -121,12 +152,13 @@ namespace ConsoleHelperLib.Proc
 						}
 					} while ((inputText != null) && (true == _isContinue));
 				}
+				proc.WaitForExit();
 			}
-			catch (InvalidOperationException)
+			catch (Exception ex)
+			when ((ex is InvalidOperationException) || (ex is Win32Exception))
 			{
-				Console.WriteLine("Sub process request invalid operation");
+				throw ex;
 			}
-			proc.WaitForExit();
 		}
 
 		/// <summary>
