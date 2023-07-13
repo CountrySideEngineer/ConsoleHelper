@@ -78,7 +78,7 @@ namespace ConsoleHelperLib.Proc
 		/// <summary>
 		/// Startup setter.
 		/// </summary>
-		/// <param name="proc">Process object to set ProcessStartupInformation</param>
+		/// <param name="proc">Process object to set ProcessStartupInformation.</param>
 		protected virtual void SetStartInfo(Process proc)
 		{
 			proc.StartInfo = _procStartInfo;
@@ -138,7 +138,6 @@ namespace ConsoleHelperLib.Proc
 			try
 			{
 				_isContinue = true;
-
 
 				proc.Start();
 				proc.BeginOutputReadLine();
