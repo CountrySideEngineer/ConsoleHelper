@@ -144,16 +144,22 @@ namespace ConsoleHelperLib.Proc
 				proc.BeginErrorReadLine();
 				using (var stdin = proc.StandardInput)
 				{
-					string inputText = string.Empty;
 					do
 					{
-						var inputData = Console.ReadKey();
-						stdin.Write(inputData.KeyChar);
-						if (inputData.KeyChar.Equals('\r'))
+						if (Console.KeyAvailable)
 						{
-							stdin.Write('\n');
+							var inputData = Console.ReadKey();
+							stdin.Write(inputData.KeyChar);
+							if (inputData.KeyChar.Equals('\r'))
+							{
+								stdin.Write('\n');
+							}
 						}
-					} while ((inputText != null) && (true == _isContinue));
+						else
+						{
+							Thread.Sleep(100);
+						}
+					} while (true == _isContinue);
 				}
 				proc.WaitForExit();
 			}
@@ -183,10 +189,8 @@ namespace ConsoleHelperLib.Proc
 		protected override void DataReceiveFinished(object sender, EventArgs e)
 		{
 			base.DataReceiveFinished(sender, e);
-
+			
 			_isContinue = false;
-
-			Console.WriteLine("Push enter key to end program.");
 		}
 	}
 }
