@@ -35,7 +35,7 @@ namespace ConsoleHelperLib.Proc
 		/// <param name="e"></param>
 		protected virtual void StandardDataReceived(object sender, DataReceivedEventArgs e)
 		{
-			ReceiveStandardData?.Invoke(this, e);
+			ReceiveStandardData?.Invoke(sender, e);
 		}
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace ConsoleHelperLib.Proc
 		/// <param name="e"></param>
 		protected virtual void ErrorDataReceived(object sender, DataReceivedEventArgs e)
 		{
-			ReceiveErrorData?.Invoke(this, e);
+			ReceiveErrorData?.Invoke(sender, e);
 		}
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace ConsoleHelperLib.Proc
 		/// <param name="e"></param>
 		protected virtual void DataReceiveFinished(object sender, EventArgs e)
 		{
-			ReceiveFinished?.Invoke(this, e);
+			ReceiveFinished?.Invoke(sender, e);
 		}
 	}
 }
