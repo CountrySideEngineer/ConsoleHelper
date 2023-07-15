@@ -149,10 +149,13 @@ namespace ConsoleHelperLib.Proc
 						if (Console.KeyAvailable)
 						{
 							var inputData = Console.ReadKey();
-							stdin.Write(inputData.KeyChar);
-							if (inputData.KeyChar.Equals('\r'))
+							if (Environment.NewLine.Contains(inputData.KeyChar))
 							{
-								stdin.Write('\n');
+								stdin.WriteLine();
+							}
+							else
+							{
+								stdin.Write(inputData.KeyChar);
 							}
 						}
 						else
