@@ -17,3 +17,4 @@ To use this application, input the command into command interface.
 ConsoleHelper.exe path/to/file/to/run
 ```
 
+The content of application's standard output are output to a file in the same folder of the application. The file name is **"ApplicationName.log"**.
