@@ -160,7 +160,7 @@ namespace ConsoleHelperLib.Proc
 						}
 						else
 						{
-							Thread.Sleep(100);
+							Thread.Sleep(10);
 						}
 					} while (true == _isContinue);
 				}
