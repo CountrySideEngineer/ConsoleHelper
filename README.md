@@ -1,8 +1,8 @@
 # OutputRecorder
 
 [![LICENSE](https://img.shields.io/badge/License-MIT-brightfreen.svg)](https://spdx.org/licenses/MIT)  
-[![APP_VER](https://img.shields.io/badge/Application-1.0.0-brightfreen?logo=.NET)](https://github.com/CountrySideEngineer/ConsoleHelper/releases/tag/Release_1.0.0)  
-[![LIB_VER](https://img.shields.io/badge/library-0.3.0-brightfreen?logo=.NET)](https://github.com/CountrySideEngineer/ConsoleHelper/releases/tag/Release_1.0.0)  
+[![APP_VER](https://img.shields.io/badge/Application-1.0.1-brightfreen?logo=.NET)](https://github.com/CountrySideEngineer/ConsoleHelper/releases/tag/Release_1.0.1)  
+[![LIB_VER](https://img.shields.io/badge/library-0.3.1-brightfreen?logo=.NET)](https://github.com/CountrySideEngineer/ConsoleHelper/releases/tag/Release_1.0.1)  
 
 ConsoleHelper is an application that records the contents of the standard output of a specified application.
 
