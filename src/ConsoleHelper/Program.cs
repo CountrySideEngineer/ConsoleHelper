@@ -40,6 +40,8 @@ namespace ConsoleHelper
 				};
 				recorder.Record(appPath, arguments);
 			}
+
+			return;
 		}
 
 		static string GetOutputLogFilePath(string appPath)
